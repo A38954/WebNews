@@ -14,5 +14,8 @@ namespace WebNews.Data.Entities
 
         public string Password { get; set; }
         public string Role { get; set; }
+
+
+        public List<NewsInUser> NewsInUsers { get; set; }
     }
 }
