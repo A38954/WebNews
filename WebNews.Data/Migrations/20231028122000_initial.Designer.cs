@@ -12,8 +12,8 @@ using WebNews.Data.EF;
 namespace WebNews.Data.Migrations
 {
     [DbContext(typeof(WebNewsDbContext))]
-    [Migration("20231028111048_InitialWebNewsDb")]
-    partial class InitialWebNewsDb
+    [Migration("20231028122000_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
