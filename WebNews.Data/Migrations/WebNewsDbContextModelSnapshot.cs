@@ -22,6 +22,53 @@ namespace WebNews.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("WebNews.Data.Entities.Categories", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories", (string)null);
+                });
+
+            modelBuilder.Entity("WebNews.Data.Entities.Comments", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("article_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("author_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("date_published")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Comments", (string)null);
+                });
+
             modelBuilder.Entity("WebNews.Data.Entities.News", b =>
                 {
                     b.Property<int>("ID")
@@ -30,18 +77,8 @@ namespace WebNews.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Describe")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("0");
 
                     b.Property<int>("Image")
                         .ValueGeneratedOnAdd()
@@ -55,6 +92,18 @@ namespace WebNews.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("0");
+
+                    b.Property<int>("author_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("category_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -64,15 +113,15 @@ namespace WebNews.Data.Migrations
 
             modelBuilder.Entity("WebNews.Data.Entities.NewsInUser", b =>
                 {
-                    b.Property<int>("NewsID")
+                    b.Property<int>("author_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("category_id")
                         .HasColumnType("int");
 
-                    b.HasKey("NewsID", "UserID");
+                    b.HasKey("author_id", "category_id");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("category_id");
 
                     b.ToTable("NewsInUser", (string)null);
                 });
@@ -112,13 +161,13 @@ namespace WebNews.Data.Migrations
                 {
                     b.HasOne("WebNews.Data.Entities.News", "News")
                         .WithMany("NewsInUsers")
-                        .HasForeignKey("NewsID")
+                        .HasForeignKey("author_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WebNews.Data.Entities.User", "User")
                         .WithMany("NewsInUsers")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("category_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

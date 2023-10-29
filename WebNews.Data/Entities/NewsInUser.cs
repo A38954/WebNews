@@ -8,11 +8,11 @@ namespace WebNews.Data.Entities
 {
     public class NewsInUser
     {
-        public int NewsID { get; set; }
+        public int author_id { get; set; }
 
         public News News { get; set; }
 
-        public int UserID { get; set; }
+        public int category_id { get; set; }
 
         public User User { get; set; }
     }

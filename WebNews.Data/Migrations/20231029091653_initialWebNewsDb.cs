@@ -6,22 +6,53 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebNews.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class initialWebNewsDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    date_published = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    article_id = table.Column<int>(type: "int", nullable: false),
+                    author_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "News",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Describe = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "0"),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "0"),
+                    content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    author_id = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    category_id = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
                 },
                 constraints: table =>
@@ -49,35 +80,41 @@ namespace WebNews.Data.Migrations
                 name: "NewsInUser",
                 columns: table => new
                 {
-                    NewsID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false)
+                    author_id = table.Column<int>(type: "int", nullable: false),
+                    category_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NewsInUser", x => new { x.NewsID, x.UserID });
+                    table.PrimaryKey("PK_NewsInUser", x => new { x.author_id, x.category_id });
                     table.ForeignKey(
-                        name: "FK_NewsInUser_News_NewsID",
-                        column: x => x.NewsID,
+                        name: "FK_NewsInUser_News_author_id",
+                        column: x => x.author_id,
                         principalTable: "News",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_NewsInUser_User_UserID",
-                        column: x => x.UserID,
+                        name: "FK_NewsInUser_User_category_id",
+                        column: x => x.category_id,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_NewsInUser_UserID",
+                name: "IX_NewsInUser_category_id",
                 table: "NewsInUser",
-                column: "UserID");
+                column: "category_id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Comments");
+
             migrationBuilder.DropTable(
                 name: "NewsInUser");
 

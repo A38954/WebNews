@@ -20,7 +20,8 @@ namespace WebNews.Data.EF
             modelBuilder.ApplyConfiguration(new NewsConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new NewsInUserConfiguration());
-
+            modelBuilder.ApplyConfiguration(new CategoriesConfiguration());
+            modelBuilder.ApplyConfiguration(new CommentsConfiguration());
             //base.OnModelCreating(modelBuilder);
         }
         public DbSet<News> Newss { get; set; }
