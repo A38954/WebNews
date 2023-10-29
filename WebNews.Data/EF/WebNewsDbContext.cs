@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebNews.Data.Configurations;
 using WebNews.Data.Entities;
-
+using WebNews.Data.Extensions;
 namespace WebNews.Data.EF
 {
     public class WebNewsDbContext : DbContext
@@ -23,6 +23,9 @@ namespace WebNews.Data.EF
             modelBuilder.ApplyConfiguration(new CategoriesConfiguration());
             modelBuilder.ApplyConfiguration(new CommentsConfiguration());
             //base.OnModelCreating(modelBuilder);
+            modelBuilder.Seed();
+           
+
         }
         public DbSet<News> Newss { get; set; }
         public DbSet<User> Users { get; set; }

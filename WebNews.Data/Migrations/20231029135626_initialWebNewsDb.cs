@@ -47,13 +47,13 @@ namespace WebNews.Data.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "0"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     author_id = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     category_id = table.Column<int>(type: "int", nullable: false),
-                    Image = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
+                    Image = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,14 +87,14 @@ namespace WebNews.Data.Migrations
                 {
                     table.PrimaryKey("PK_NewsInUser", x => new { x.author_id, x.category_id });
                     table.ForeignKey(
-                        name: "FK_NewsInUser_News_author_id",
-                        column: x => x.author_id,
+                        name: "FK_NewsInUser_News_category_id",
+                        column: x => x.category_id,
                         principalTable: "News",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_NewsInUser_User_category_id",
-                        column: x => x.category_id,
+                        name: "FK_NewsInUser_User_author_id",
+                        column: x => x.author_id,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
