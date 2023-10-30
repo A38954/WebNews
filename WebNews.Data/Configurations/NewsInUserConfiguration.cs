@@ -18,9 +18,9 @@ namespace WebNews.Data.Configurations
             builder.ToTable("NewsInUser");
 
             builder.HasOne(t => t.User).WithMany(pc => pc.NewsInUsers)
-                .HasForeignKey(pc => pc.category_id);
-            builder.HasOne(t => t.News).WithMany(pc => pc.NewsInUsers)
                 .HasForeignKey(pc => pc.author_id);
+            builder.HasOne(t => t.News).WithMany(pc => pc.NewsInUsers)
+                .HasForeignKey(pc => pc.category_id);
 
 
         }

@@ -16,13 +16,13 @@ namespace WebNews.Data.Configurations
         {
             builder.ToTable("News");
             builder.HasKey(x => x.ID);
-            builder.Property(x => x.Title).IsRequired().HasDefaultValue(0);
+            builder.Property(x => x.Title).IsRequired();
             builder.Property(x => x.content).IsRequired();
             builder.Property(x => x.author_id).IsRequired();
             builder.Property(x => x.category_id).IsRequired();
             builder.Property(x => x.DateCreated).IsRequired();
             builder.Property(x => x.Status).IsRequired().HasDefaultValue(Status.Active);
-            builder.Property(x => x.Image).IsRequired().HasDefaultValue(0);
+            builder.Property(x => x.Image).IsRequired();
         }
     }
 }

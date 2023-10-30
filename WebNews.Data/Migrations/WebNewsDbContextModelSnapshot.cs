@@ -81,9 +81,7 @@ namespace WebNews.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Image")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
@@ -92,9 +90,7 @@ namespace WebNews.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("0");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("author_id")
                         .HasColumnType("int");
@@ -109,6 +105,41 @@ namespace WebNews.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("News", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            DateCreated = new DateTime(2023, 10, 29, 21, 21, 5, 453, DateTimeKind.Local).AddTicks(3004),
+                            Image = 0,
+                            Status = 1,
+                            Title = "du bao thoi tiet",
+                            author_id = 1,
+                            category_id = 1,
+                            content = "Hnay troi co mua"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            DateCreated = new DateTime(2023, 10, 29, 21, 21, 5, 453, DateTimeKind.Local).AddTicks(3020),
+                            Image = 0,
+                            Status = 1,
+                            Title = "Gia xang tang",
+                            author_id = 2,
+                            category_id = 2,
+                            content = "Xang hon nay tang them 2000d"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            DateCreated = new DateTime(2023, 10, 29, 21, 21, 5, 453, DateTimeKind.Local).AddTicks(3021),
+                            Image = 0,
+                            Status = 1,
+                            Title = "Tong Thong My tham Viet Nam",
+                            author_id = 1,
+                            category_id = 3,
+                            content = "Tong thong My da den va tham Viet Nam vao hom nay"
+                        });
                 });
 
             modelBuilder.Entity("WebNews.Data.Entities.NewsInUser", b =>
@@ -124,6 +155,13 @@ namespace WebNews.Data.Migrations
                     b.HasIndex("category_id");
 
                     b.ToTable("NewsInUser", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            author_id = 1,
+                            category_id = 1
+                        });
                 });
 
             modelBuilder.Entity("WebNews.Data.Entities.User", b =>
@@ -155,17 +193,35 @@ namespace WebNews.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "ThanhLong@gmail.com",
+                            Name = "Long",
+                            Password = "123",
+                            Role = "Tac Gia"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "LeMinh@gmail.com",
+                            Name = "Minh",
+                            Password = "456",
+                            Role = "Tac Gia"
+                        });
                 });
 
             modelBuilder.Entity("WebNews.Data.Entities.NewsInUser", b =>
                 {
-                    b.HasOne("WebNews.Data.Entities.News", "News")
+                    b.HasOne("WebNews.Data.Entities.User", "User")
                         .WithMany("NewsInUsers")
                         .HasForeignKey("author_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebNews.Data.Entities.User", "User")
+                    b.HasOne("WebNews.Data.Entities.News", "News")
                         .WithMany("NewsInUsers")
                         .HasForeignKey("category_id")
                         .OnDelete(DeleteBehavior.Cascade)
