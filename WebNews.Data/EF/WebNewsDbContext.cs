@@ -15,6 +15,11 @@ namespace WebNews.Data.EF
         public WebNewsDbContext(DbContextOptions options) : base(options)
         {
         }
+
+        public WebNewsDbContext()
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new NewsConfiguration());

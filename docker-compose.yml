@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  webnews:
+    image: ${DOCKER_REGISTRY-}webnews
+    build:
+      context: .
+      dockerfile: WebNews\Dockerfile
