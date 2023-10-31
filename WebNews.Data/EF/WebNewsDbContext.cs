@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using WebNews.Data.Entities;
 using WebNews.Data.Extensions;
 namespace WebNews.Data.EF
 {
-    public class WebNewsDbContext : DbContext
+    public class WebNewsDbContext : IdentityDbContext
     {
         public WebNewsDbContext(DbContextOptions options) : base(options)
         {
